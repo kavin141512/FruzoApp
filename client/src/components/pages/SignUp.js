@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -8,7 +8,7 @@ function Signup() {
     phoneNumber: '',
     password: '',
   });
-
+  const nav = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -27,6 +27,7 @@ function Signup() {
         },
         body: JSON.stringify(formData),
       });
+      nav("/");
     } catch (error) {
       console.error('Error:', error.message);
       // Handle error, e.g., show an error message to the user

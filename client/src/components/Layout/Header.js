@@ -19,7 +19,7 @@ function Header() {
             <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 ">
               <li><Link to="/" className="hover:text-orange-600">Home</Link></li>
               <li><Link to="/category" className="hover:text-orange-600">Category</Link></li>
-              <li><Link to="/upload" className="hover:text-orange-600">Upload</Link></li>
+              <li><Link to="/upload" className="hover:text-orange-600">Service</Link></li>
               <li><Link to="/contact" className="hover:text-orange-600">Contact Us</Link></li>
             </ul>
             {/* Header Icons */}
