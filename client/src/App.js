@@ -11,6 +11,7 @@ import Cart from './components/pages/Cart';
 import SignIn from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 import Logout from './components/pages/Logout';
+import Wishlist from './components/pages/Wistlist';
 
 
 
@@ -30,6 +31,7 @@ function App() {
       <Route path='/login' element={<SignIn/>}/>
       <Route path='/register' element={<SignUp/>}/>
       <Route path='/logout' element={<Logout/>}/>
+      <Route path='/wishlist' element={<Wishlist/>}/>
     </Routes>
     <Footer/>
    </Router>

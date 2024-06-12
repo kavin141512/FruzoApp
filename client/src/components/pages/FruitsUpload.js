@@ -8,7 +8,7 @@ const FruitsUpload = () => {
     description: '',
     price: '',
     quantityAvailable: '',
-    imageUrl: '', // Change to empty string
+    imageUrl: '',
     category: '',
     origin: ''
   });
@@ -34,7 +34,7 @@ const FruitsUpload = () => {
       const responseData = await response.json();
 
       if (responseData.secure_url) {
-        setFormData({ ...formData, imageUrl: responseData.secure_url });
+        return responseData.secure_url;
       } else {
         throw new Error("Image upload failed");
       }
@@ -47,12 +47,16 @@ const FruitsUpload = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      let imageUrl = formData.imageUrl;
       if (image) {
-        await submitImage(); // Upload image before form submission
+        imageUrl = await submitImage(); // Upload image before form submission
       }
-      const response = await axios.post('http://localhost:8000/api/product', formData);
+
+      const updatedFormData = { ...formData, imageUrl };
+      const response = await axios.post('http://localhost:8000/api/product', updatedFormData);
       toast.success('Product uploaded successfully!');
       console.log('Response:', response.data);
+
       // Optionally, you can reset the form after successful submission
       setFormData({
         name: '',
@@ -63,9 +67,10 @@ const FruitsUpload = () => {
         category: '',
         origin: ''
       });
+      setImage("");
     } catch (error) {
       console.error('Error:', error.message);
-      toast.error('Failed to upload product.');
+      toast.warning('Login First to upload product.');
     }
   };
 

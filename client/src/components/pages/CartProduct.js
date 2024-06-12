@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function CartProduct({ item }) {
   const [quantity, setQuantity] = useState(item.quantity);
@@ -18,6 +19,7 @@ function CartProduct({ item }) {
       }
       const updatedCart = await response.json();
       setQuantity(newQuantity);
+      toast.success('items Quantity Updated',newQuantity );
     } catch (error) {
       console.error('Error updating item quantity:', error);
       // Handle error
@@ -30,10 +32,13 @@ function CartProduct({ item }) {
         method: 'DELETE',
         credentials: 'include',
       });
+      toast.success('Remove successfully!');
       window.location.href = 'http://localhost:3000/cart';
+    
       if (!response.ok) {
         throw new Error('Failed to remove item from cart');
       }
+   
     } catch (error) {
       console.error('Error removing item:', error);
       // Handle error

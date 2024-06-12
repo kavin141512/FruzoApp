@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import CartProduct from './CartProduct';
 
 const CartItems = ({cartItems, removeItem}) => {
+  const totalValue = cartItems.reduce((total, item) => total + item.product.price * item.quantity , 0);
+
   return (
     <div className="container">
       <div className="sm:flex shadow-md my-10">
@@ -32,7 +34,7 @@ const CartItems = ({cartItems, removeItem}) => {
           <h1 className="font-semibold text-2xl border-b pb-8">Order Summary</h1>
           <div className="flex justify-between mt-10 mb-5">
             <span className="font-semibold text-sm uppercase">Items {cartItems.length}</span>
-            <span className="font-semibold text-sm">0$</span>
+            <span className="font-semibold text-sm">{totalValue}$</span>
           </div>
           <div>
             <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
@@ -48,7 +50,7 @@ const CartItems = ({cartItems, removeItem}) => {
           <div className="border-t mt-8">
             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
               <span>Total cost</span>
-              <span>$0</span>
+              <span>${totalValue/* assuming $10 for standard shipping */}</span>
             </div>
             <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
           </div>

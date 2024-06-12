@@ -128,3 +128,36 @@ exports.updateQuantity = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+
+
+
+
+exports.getwishItems = async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(400).json({ error: 'JWT token is missing' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ error: 'Cart not found' });
+    }
+
+    // Fetch additional details for each product in the cart
+    const cartItemsWithDetails = await Promise.all(cart.items.map(async (item) => {
+      const product = await Product.findById(item.productId);
+      return { ...item.toObject(), product };
+    }));
+
+    res.status(200).json({ items: cartItemsWithDetails, totalprice: cart.totalprice });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
